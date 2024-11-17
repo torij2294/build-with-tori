@@ -7,7 +7,9 @@ export default function SignupForm() {
   const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', idea: '' });
   const [status, setStatus] = useState<string>('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -95,7 +97,7 @@ export default function SignupForm() {
               name="idea"
               placeholder="Share your idea here..."
               value={formData.idea}
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleChange(e)}
+              onChange={handleChange}
               className="w-full px-4 py-2 rounded-[32px] border border-black min-h-[100px] resize-none"
               required
             />
