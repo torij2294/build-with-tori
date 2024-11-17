@@ -93,14 +93,16 @@ export default function SignupForm() {
                 required
               />
             </div>
-            <textarea
-              name="idea"
-              placeholder="Share your idea here..."
-              value={formData.idea}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-[32px] border border-black min-h-[100px] resize-none"
-              required
-            />
+            <div className="relative rounded-[32px] overflow-hidden border border-black bg-white focus-within:ring-2 focus-within:ring-[#9fe6ed]">
+              <textarea
+                name="idea"
+                placeholder="Share your idea here..."
+                value={formData.idea}
+                onChange={handleChange}
+                className="w-full px-4 pr-8 py-3 min-h-[150px] max-h-[300px] overflow-y-auto resize-none text-[16px] placeholder-gray-400 bg-white focus:outline-none font-dm-sans scrollbar-thin scrollbar-thumb-black/20 scrollbar-track-transparent"
+                required
+              />
+            </div>
             <button
               type="submit"
               className="bg-[#9fe6ed] text-[#2D2D2D] py-4 px-6 rounded-full border border-black text-[16px] font-medium hover:opacity-90 transition-opacity mt-6 font-dm-sans"
