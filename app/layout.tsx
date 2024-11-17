@@ -1,3 +1,4 @@
+import './globals.css'
 import { DM_Sans, Poppins } from 'next/font/google';
 
 const dmSans = DM_Sans({
