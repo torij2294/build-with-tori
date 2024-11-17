@@ -24,23 +24,16 @@ export default function SignupForm() {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-
       if (response.ok) {
         setStatus('Submission successful!');
         setFormData({ firstName: '', lastName: '', email: '', idea: '' });
       } else {
-        console.error('Submission Error:', data);
-        setStatus(`Error: ${data.message}${data.error ? ` - ${JSON.stringify(data.error)}` : ''}`);
+        console.error('Submission Error:', await response.json());
+        setStatus('Submission failed. Please try again later.');
       }
     } catch (err) {
-      if (err instanceof Error) {
-        console.error('Fetch Error:', err);
-        setStatus('An unexpected error occurred: ' + err.message);
-      } else {
-        console.error('Fetch Error:', err);
-        setStatus('An unexpected error occurred.');
-      }
+      console.error('Fetch Error:', err);
+      setStatus('Submission failed. Please try again later.');
     }
   };
 

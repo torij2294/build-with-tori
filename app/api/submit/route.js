@@ -15,26 +15,34 @@ export async function POST(request) {
 
     // 1. Send email via Nodemailer
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true, // use SSL
       auth: {
         user: process.env.GMAIL_USER,
         pass: process.env.GMAIL_APP_PASSWORD,
       },
     });
 
-    await transporter.sendMail({
-      from: process.env.GMAIL_USER,
-      to: process.env.GMAIL_RECIPIENT_EMAIL,
-      subject: `New Idea Submission from ${firstName} ${lastName}`,
-      text: `Name: ${firstName} ${lastName}\nEmail: ${email}\nIdea: ${idea}`,
-      html: `
-        <h2>New Idea Submission</h2>
-        <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Idea:</strong></p>
-        <p>${idea}</p>
-      `,
-    });
+    // Add error handling for email sending
+    try {
+      await transporter.sendMail({
+        from: process.env.GMAIL_USER,
+        to: process.env.GMAIL_RECIPIENT_EMAIL,
+        subject: `New Idea Submission from ${firstName} ${lastName}`,
+        text: `Name: ${firstName} ${lastName}\nEmail: ${email}\nIdea: ${idea}`,
+        html: `
+          <h2>New Idea Submission</h2>
+          <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Idea:</strong></p>
+          <p>${idea}</p>
+        `,
+      });
+    } catch (emailError) {
+      console.error('Email sending error:', emailError);
+      throw new Error(`Email sending failed: ${emailError.message}`);
+    }
 
     // 2. Add to Mailchimp audience
     const emailHash = crypto
