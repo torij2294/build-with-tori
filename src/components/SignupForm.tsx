@@ -28,7 +28,8 @@ export default function SignupForm() {
         setStatus('Submission successful!');
         setFormData({ firstName: '', lastName: '', email: '', idea: '' });
       } else {
-        console.error('Submission Error:', await response.json());
+        const errorData = await response.text();
+        console.error('Submission Error:', errorData);
         setStatus('Submission failed. Please try again later.');
       }
     } catch (err) {
@@ -38,89 +39,79 @@ export default function SignupForm() {
   };
 
   return (
-    <>
-      <div className="w-full px-6 pb-12">
-        <div className="bg-[#d1ed9f] rounded-[32px] border border-black shadow-lg p-6">
-          <div className="flex items-center gap-4 mb-8">
+    <div className="px-6 py-12">
+      <div className="max-w-2xl mx-auto border border-black rounded-none p-8 shadow-sm bg-white">
+        <div className="text-center mb-8 space-y-4">
+          <div className="flex items-center justify-center gap-3">
             <Image
-              src="/lightbulb-icon.png"
+              src="/lightbulb-icon-2.png"
               alt="Lightbulb icon"
-              width={70}
-              height={70}
+              width={75}
+              height={75}
             />
-            <h2 className="text-[18px] font-semibold text-[#2D2D2D] font-source-sans-3 leading-tight">
-              Got an idea? Share it and let&apos;s build together!
+            <h2 className="text-base font-medium pr-8 text-left text-[#2D2D2D] font-source-sans-3">
+              Share your idea with me and let&apos;s create something amazing together!
             </h2>
           </div>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <input
-                type="text"
-                name="firstName"
-                placeholder="First Name"
-                value={formData.firstName}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-black rounded-full text-[16px] placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-[#9fe6ed] font-dm-sans"
-                required
-              />
-            </div>
-            <div>
-              <input
-                type="text"
-                name="lastName"
-                placeholder="Last Name"
-                value={formData.lastName}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-black rounded-full text-[16px] placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-[#9fe6ed] font-dm-sans"
-                required
-              />
-            </div>
-            <div>
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-black rounded-full text-[16px] placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-[#9fe6ed] font-dm-sans"
-                required
-              />
-            </div>
-            <div className="relative rounded-[32px] overflow-hidden border border-black bg-white focus-within:ring-2 focus-within:ring-[#9fe6ed]">
-              <textarea
-                name="idea"
-                placeholder="Share your idea here..."
-                value={formData.idea}
-                onChange={handleChange}
-                className="w-full px-4 pr-8 py-3 min-h-[150px] max-h-[300px] overflow-y-auto resize-none text-[16px] placeholder-gray-400 bg-white focus:outline-none font-dm-sans scrollbar-thin scrollbar-thumb-black/20 scrollbar-track-transparent"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              className="bg-[#9fe6ed] text-[#2D2D2D] py-4 px-6 rounded-full border border-black text-[16px] font-medium hover:opacity-90 transition-opacity mt-6 font-dm-sans"
-            >
-              Get Access
-            </button>
-            {status && (
-              <p className="text-center mt-4 text-[16px] font-medium">
-                {status}
-              </p>
-            )}
-          </form>
         </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <input
+              type="text"
+              name="firstName"
+              placeholder="First Name"
+              value={formData.firstName}
+              onChange={handleChange}
+              className="px-4 py-3 border border-neutral-400 rounded-none text-base placeholder-neutral-400 bg-white focus:outline-none focus:ring-2 focus:ring-red-900 focus:border-transparent"
+              required
+            />
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Last Name"
+              value={formData.lastName}
+              onChange={handleChange}
+              className="px-4 py-3 border border-neutral-400 rounded-none text-base placeholder-neutral-400 bg-white focus:outline-none focus:ring-2 focus:ring-red-900 focus:border-transparent"
+              required
+            />
+          </div>
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full px-4 py-3 border border-neutral-400 rounded-none text-base placeholder-neutral-400 bg-white focus:outline-none focus:ring-2 focus:ring-red-900 focus:border-transparent"
+            required
+          />
+
+          <div className="relative rounded-none overflow-hidden border border-neutral-400 focus-within:ring-2 focus-within:ring-red-900">
+            <textarea
+              name="idea"
+              placeholder="Share your idea here..."
+              value={formData.idea}
+              onChange={handleChange}
+              className="w-full px-4 py-3 min-h-[150px] text-base placeholder-neutral-400 bg-white focus:outline-none resize-none"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-red-900 text-white py-4 px-6 rounded-none text-lg font-medium hover:bg-opacity-90 transition-opacity"
+          >
+            Submit
+          </button>
+
+          {status && (
+            <p className="text-center text-lg font-medium text-neutral-500">
+              {status}
+            </p>
+          )}
+        </form>
       </div>
-      
-      <div className="w-full px-6">
-        <a 
-          href="https://www.terris.io/" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="block w-full bg-[#f4a7fa] text-[#2D2D2D] py-6 px-6 rounded-full border border-black text-[20px] font-medium hover:opacity-90 transition-opacity text-center font-dm-sans"
-        >
-          Sign-up for Terris&apos; waitlist
-        </a>
-      </div>
-    </>
+    </div>
   );
 } 

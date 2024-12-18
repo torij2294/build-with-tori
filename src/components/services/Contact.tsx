@@ -24,6 +24,7 @@ export default function Contact() {
     },
     description: ''
   });
+  const [status, setStatus] = useState<string>('');
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -49,11 +50,40 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Add your form submission logic here
+    setStatus('Submitting...');
+
+    try {
+      const response = await fetch('/api/services-submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setStatus('Submission successful!');
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          projectType: {
+            website: false,
+            mobileApp: false,
+          },
+          description: ''
+        });
+      } else {
+        const errorData = await response.text();
+        console.error('Submission Error:', errorData);
+        setStatus('Submission failed. Please try again later.');
+      }
+    } catch (err) {
+      console.error('Fetch Error:', err);
+      setStatus('Submission failed. Please try again later.');
+    }
   };
 
   return (
-    <div className="px-6 py-12">
+    <div id="contact" className="px-6 py-12">
       <div className="text-center space-y-4 mb-12">
         <h2 className="text-5xl font-medium text-red-900 font-playfair-display">
           Are you ready to have some fun<br />and grow your business?
@@ -72,7 +102,7 @@ export default function Contact() {
               placeholder="First Name"
               value={formData.firstName}
               onChange={handleChange}
-              className="px-4 py-3 border border-neutral-400 rounded-lg text-base placeholder-neutral-400 bg-white focus:outline-none focus:ring-2 focus:ring-red-900 focus:border-transparent"
+              className="px-4 py-3 border border-neutral-400 rounded-none text-base placeholder-neutral-400 bg-white focus:outline-none focus:ring-2 focus:ring-red-900 focus:border-transparent"
               required
             />
             <input
@@ -81,7 +111,7 @@ export default function Contact() {
               placeholder="Last Name"
               value={formData.lastName}
               onChange={handleChange}
-              className="px-4 py-3 border border-neutral-400 rounded-lg text-base placeholder-neutral-400 bg-white focus:outline-none focus:ring-2 focus:ring-red-900 focus:border-transparent"
+              className="px-4 py-3 border border-neutral-400 rounded-none text-base placeholder-neutral-400 bg-white focus:outline-none focus:ring-2 focus:ring-red-900 focus:border-transparent"
               required
             />
           </div>
@@ -92,7 +122,7 @@ export default function Contact() {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-neutral-400 rounded-lg text-base placeholder-neutral-400 bg-white focus:outline-none focus:ring-2 focus:ring-red-900 focus:border-transparent"
+            className="w-full px-4 py-3 border border-neutral-400 rounded-none text-base placeholder-neutral-400 bg-white focus:outline-none focus:ring-2 focus:ring-red-900 focus:border-transparent"
             required
           />
 
@@ -105,7 +135,7 @@ export default function Contact() {
                   name="website"
                   checked={formData.projectType.website}
                   onChange={handleChange}
-                  className="w-5 h-5 rounded border-neutral-400 text-red-900 focus:ring-red-900"
+                  className="w-5 h-5 rounded border-neutral-400 text-black focus:ring-black accent-black"
                 />
                 <span className="text-neutral-500">Website</span>
               </label>
@@ -115,14 +145,14 @@ export default function Contact() {
                   name="mobileApp"
                   checked={formData.projectType.mobileApp}
                   onChange={handleChange}
-                  className="w-5 h-5 rounded border-neutral-400 text-red-900 focus:ring-red-900"
+                  className="w-5 h-5 border-neutral-400 text-black focus:ring-black accent-black"
                 />
                 <span className="text-neutral-500">Mobile App</span>
               </label>
             </div>
           </div>
 
-          <div className="relative rounded-lg overflow-hidden border border-neutral-400 focus-within:ring-2 focus-within:ring-red-900">
+          <div className="relative rounded-none overflow-hidden border border-neutral-400 focus-within:ring-2 focus-within:ring-red-900">
             <textarea
               name="description"
               placeholder="Tell me about your idea..."
@@ -135,10 +165,16 @@ export default function Contact() {
 
           <button
             type="submit"
-            className="w-full bg-red-900 text-white py-4 px-6 rounded-lg text-lg font-medium hover:bg-opacity-90 transition-opacity"
+            className="w-full bg-red-900 text-white py-4 px-6 rounded-none text-lg font-medium hover:bg-opacity-90 transition-opacity"
           >
             Submit Application
           </button>
+
+          {status && (
+            <p className="text-center text-lg font-medium text-neutral-500">
+              {status}
+            </p>
+          )}
         </form>
       </div>
     </div>

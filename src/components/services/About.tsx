@@ -21,7 +21,15 @@ export default function ServicesAbout() {
                             My work is about more than code. It’s about giving you a digital space that reflects your vision and helps your business flourish—so you can focus on what you do best.
                             <br />
                             <br />
-                            Let’s create something you’ll be proud to show off.
+                            Let’s create something you’ll be proud to show off.{' '}
+                            <br />
+                            <br />
+                            <a 
+                                href="#contact" 
+                                className="text-red-900 underline italic hover:text-black"
+                            >
+                                Get in touch
+                            </a>
                         </p>
                     </div>
 

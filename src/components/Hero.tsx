@@ -13,8 +13,8 @@ export default function Hero() {
           priority
         />
       </div>
-      <div className="space-y-2 mb-12">
-        <h1 className="text-[38px] leading-tight font-semibold text-[#2D2D2D] font-playfair-display">
+      <div className="space-y-2">
+        <h1 className="text-[42px] leading-tight font-semibold text-[#2D2D2D] font-playfair-display">
           Hi, I&apos;m Tori.
         </h1>
         <p className="text-[28px] leading-tight font-semibold text-[#2D2D2D] max-w-[280px] font-playfair-display">

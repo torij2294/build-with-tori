@@ -16,18 +16,20 @@ export default function ServicesHero() {
             />
           </div>
         </div>
-        
+
         <div className="w-full md:w-3/5 space-y-6">
           <h1 className="text-[42px] leading-tight font-semibold text-[#2D2D2D] font-playfair-display">
             Bespoke Websites and Apps tailored to your vision
           </h1>
-          <button 
-            className="w-fit px-8 py-4 border border-black text-[18px] font-medium font-source-sans-3 
+          <a href="#contact">
+            <button
+              className="w-fit px-8 py-4 border border-black text-[18px] font-medium font-source-sans-3 
             transition-all duration-200 hover:bg-red-950 hover:bg-opacity-90 hover:text-white inline-flex items-center justify-center gap-3"
-          >
-            Let&apos;s Build Together
-            <IoArrowForward className="text-xl" />
-          </button>
+            >
+              Let&apos;s Build Together
+              <IoArrowForward className="text-xl" />
+            </button>
+          </a>
         </div>
       </div>
     </div>
