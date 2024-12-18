@@ -14,10 +14,10 @@ export default function Hero() {
         />
       </div>
       <div className="space-y-2 mb-12">
-        <h1 className="text-[38px] leading-tight font-semibold text-[#2D2D2D] font-poppins">
+        <h1 className="text-[38px] leading-tight font-semibold text-[#2D2D2D] font-playfair-display">
           Hi, I&apos;m Tori.
         </h1>
-        <p className="text-[28px] leading-tight font-semibold text-[#2D2D2D] max-w-[280px] font-poppins">
+        <p className="text-[28px] leading-tight font-semibold text-[#2D2D2D] max-w-[280px] font-playfair-display">
           I help founders build applications.
         </p>
       </div>

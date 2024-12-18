@@ -11,6 +11,10 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        'playfair-display': ['var(--font-playfair-display)'],
+        'source-sans-3': ['var(--font-source-sans-3)'],
+      },
     },
   },
   plugins: [

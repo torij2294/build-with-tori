@@ -48,7 +48,7 @@ export default function SignupForm() {
               width={70}
               height={70}
             />
-            <h2 className="text-[18px] font-semibold text-[#2D2D2D] font-poppins leading-tight">
+            <h2 className="text-[18px] font-semibold text-[#2D2D2D] font-source-sans-3 leading-tight">
               Got an idea? Share it and let&apos;s build together!
             </h2>
           </div>
