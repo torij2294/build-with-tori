@@ -15,13 +15,13 @@ export default function ServicesAbout() {
                             I help founders build custom websites and apps.
                             <br />
                             <br />
-                            Whether you’re launching your first startup or running a small business, you deserve a website or app you’re excited to share. You deserve a digital experience that feels like you —modern, functional, and built to stand out. That’s where I come in.
+                            Whether you’re launching your first startup or running a small business, you deserve a website or app that represents your brand —modern, functional, and built to stand out. That’s where I come in.
                             <br />
                             <br />
                             My work is about more than code. It’s about giving you a digital space that reflects your vision and helps your business flourish—so you can focus on what you do best.
                             <br />
                             <br />
-                            Let’s create something you’ll be proud to show off.{' '}
+                            Let’s create something you’ll be proud to show off!{' '}
                             <br />
                             <br />
                             <a 

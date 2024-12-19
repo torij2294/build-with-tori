@@ -12,7 +12,7 @@ export default function Navbar() {
   return (
     <nav className="p-6 relative z-50">
       <div className="flex justify-between items-center">
-        <Link href="/" className="text-xl font-semibold text-[#2D2D2D]">
+        <Link href="/services" className="text-xl font-semibold text-[#2D2D2D]">
           @buildwithtori
         </Link>
 

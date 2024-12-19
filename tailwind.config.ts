@@ -10,6 +10,7 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        cream: "#f4eddb",
       },
       fontFamily: {
         'playfair-display': ['var(--font-playfair-display)'],
