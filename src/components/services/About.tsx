@@ -33,10 +33,10 @@ export default function ServicesAbout() {
                         </p>
                     </div>
 
-                    <div className="w-full md:w-1/2 h-[400px] relative md:pl-8 mt-8 md:mt-0">
+                    <div className="w-full md:w-1/2 md:h-[500px] h-[400px] relative md:pl-8 mt-8 md:mt-0">
                         <div className="w-full h-full relative rounded-none overflow-hidden border border-black shadow-lg">
                             <Image
-                                src="/about-image.jpg"
+                                src="/tori-closeup.JPEG"
                                 alt="About section image"
                                 fill
                                 className="object-cover"

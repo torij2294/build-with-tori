@@ -5,11 +5,11 @@ export default function Hero() {
     <div className="flex flex-col px-6 pt-8">
       <div className="w-[164px] h-[164px] relative mb-6">
         <Image
-          src="/tori-profile.jpg"
+          src="/tori-profile.png"
           alt="Tori"
           width={164}
           height={164}
-          className="rounded-full object-cover shadow-lg"
+          className="rounded-full object-cover shadow-lg border border-black"
           priority
         />
       </div>

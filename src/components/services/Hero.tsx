@@ -8,7 +8,7 @@ export default function ServicesHero() {
         <div className="w-full md:w-2/5">
           <div className="w-full aspect-square relative rounded-none overflow-hidden border border-black shadow-lg">
             <Image
-              src="/services-hero.jpg"
+              src="/tori-laptop.png"
               alt="Services illustration"
               fill
               className="object-cover"
