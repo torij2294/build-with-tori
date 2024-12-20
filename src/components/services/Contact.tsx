@@ -1,16 +1,51 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 
-export default function SignupForm() {
-  const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', idea: '' });
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  projectType: {
+    website: boolean;
+    mobileApp: boolean;
+  };
+  description: string;
+}
+
+export default function Contact() {
+  const [formData, setFormData] = useState<FormData>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    projectType: {
+      website: false,
+      mobileApp: false,
+    },
+    description: ''
+  });
   const [status, setStatus] = useState<string>('');
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, type } = e.target;
+    
+    if (type === 'checkbox') {
+      const checkbox = e.target as HTMLInputElement;
+      setFormData(prev => ({
+        ...prev,
+        projectType: {
+          ...prev.projectType,
+          [name]: checkbox.checked
+        }
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -18,7 +53,7 @@ export default function SignupForm() {
     setStatus('Submitting...');
 
     try {
-      const response = await fetch('/api/submit', {
+      const response = await fetch('/api/services-submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -26,7 +61,16 @@ export default function SignupForm() {
 
       if (response.ok) {
         setStatus('Submission successful!');
-        setFormData({ firstName: '', lastName: '', email: '', idea: '' });
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          projectType: {
+            website: false,
+            mobileApp: false,
+          },
+          description: ''
+        });
       } else {
         const errorData = await response.text();
         console.error('Submission Error:', errorData);
@@ -39,22 +83,17 @@ export default function SignupForm() {
   };
 
   return (
-    <div className="px-6 py-12">
-      <div className="max-w-2xl mx-auto border border-black rounded-none p-8 shadow-sm bg-white">
-        <div className="text-center mb-8 space-y-4">
-          <div className="flex items-center justify-center gap-3">
-            <Image
-              src="/lightbulb-icon-2.png"
-              alt="Lightbulb icon"
-              width={75}
-              height={75}
-            />
-            <h2 className="text-base font-medium pr-8 text-left text-[#2D2D2D] font-source-sans-3">
-              Share your idea with me and let&apos;s create something amazing together!
-            </h2>
-          </div>
-        </div>
+    <div id="contact" className="px-6 py-12">
+      <div className="text-center space-y-4 mb-12">
+        <h2 className="text-5xl font-medium text-red-900 font-playfair-display">
+          Are you ready to have some fun<br />and grow your business?
+        </h2>
+        <p className="text-lg text-neutral-500 font-source-sans-3 max-w-2xl mx-auto">
+          I can't wait to hear about your idea! Please fill out the client application form below and we'll get back to you asap.
+        </p>
+      </div>
 
+      <div className="max-w-2xl mx-auto">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <input
@@ -76,7 +115,7 @@ export default function SignupForm() {
               required
             />
           </div>
-
+          
           <input
             type="email"
             name="email"
@@ -87,11 +126,37 @@ export default function SignupForm() {
             required
           />
 
+          <div className="space-y-3">
+            <p className="text-neutral-500 font-medium">What are you looking to build?</p>
+            <div className="space-y-2">
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  name="website"
+                  checked={formData.projectType.website}
+                  onChange={handleChange}
+                  className="w-5 h-5 rounded border-neutral-400 text-black focus:ring-black accent-black"
+                />
+                <span className="text-neutral-500">Website</span>
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  name="mobileApp"
+                  checked={formData.projectType.mobileApp}
+                  onChange={handleChange}
+                  className="w-5 h-5 border-neutral-400 text-black focus:ring-black accent-black"
+                />
+                <span className="text-neutral-500">Mobile App</span>
+              </label>
+            </div>
+          </div>
+
           <div className="relative rounded-none overflow-hidden border border-neutral-400 focus-within:ring-2 focus-within:ring-red-900">
             <textarea
-              name="idea"
-              placeholder="Share your idea here..."
-              value={formData.idea}
+              name="description"
+              placeholder="Tell me about your idea..."
+              value={formData.description}
               onChange={handleChange}
               className="w-full px-4 py-3 min-h-[150px] text-base placeholder-neutral-400 bg-white focus:outline-none resize-none"
               required
@@ -102,7 +167,7 @@ export default function SignupForm() {
             type="submit"
             className="w-full bg-red-900 text-white py-4 px-6 rounded-none text-lg font-medium hover:bg-opacity-90 transition-opacity"
           >
-            Submit
+            Submit Application
           </button>
 
           {status && (

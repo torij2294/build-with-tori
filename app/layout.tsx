@@ -1,15 +1,17 @@
 import './globals.css'
-import { DM_Sans, Poppins } from 'next/font/google';
+import { Source_Sans_3, Playfair_Display } from 'next/font/google';
 
-const dmSans = DM_Sans({
+const sourceSans3 = Source_Sans_3({
   subsets: ['latin'],
   display: 'swap',
+  variable: '--font-source-sans-3'
 });
 
-const poppins = Poppins({
+const playfairDisplay = Playfair_Display({
   weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
   display: 'swap',
+  variable: '--font-playfair-display'
 });
 
 export default function RootLayout({
@@ -19,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${dmSans.className} ${poppins.className}`}>
+      <body className={`${sourceSans3.variable} ${playfairDisplay.variable} ${sourceSans3.className} ${playfairDisplay.className}`}>
         {children}
       </body>
     </html>
