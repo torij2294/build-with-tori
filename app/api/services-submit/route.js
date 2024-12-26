@@ -29,7 +29,8 @@ export async function POST(request) {
     const selectedProjects = [];
     if (projectType.website) selectedProjects.push("Website");
     if (projectType.mobileApp) selectedProjects.push("Mobile App");
-    const projectTypeText = selectedProjects.join(" and ");
+    if (projectType.landingPage) selectedProjects.push("$400 Landing Page");
+    const projectTypeText = selectedProjects.join(", ");
 
     await transporter.sendMail({
       from: process.env.GMAIL_USER,

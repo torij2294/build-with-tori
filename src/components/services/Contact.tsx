@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 interface FormData {
   firstName: string;
@@ -9,6 +9,7 @@ interface FormData {
   projectType: {
     website: boolean;
     mobileApp: boolean;
+    landingPage: boolean;
   };
   description: string;
 }
@@ -21,16 +22,20 @@ export default function Contact() {
     projectType: {
       website: false,
       mobileApp: false,
+      landingPage: false,
     },
     description: ''
   });
   const [status, setStatus] = useState<string>('');
+  const formRef = useRef<HTMLFormElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const statusRef = useRef<HTMLParagraphElement>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value, type } = e.target;
-    
+
     if (type === 'checkbox') {
       const checkbox = e.target as HTMLInputElement;
       setFormData(prev => ({
@@ -51,6 +56,14 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('Submitting...');
+    setIsSubmitting(true);
+
+    setTimeout(() => {
+      statusRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }, 100);
 
     try {
       const response = await fetch('/api/services-submit', {
@@ -68,9 +81,17 @@ export default function Contact() {
           projectType: {
             website: false,
             mobileApp: false,
+            landingPage: false,
           },
           description: ''
         });
+
+        setTimeout(() => {
+          statusRef.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+        }, 100);
       } else {
         const errorData = await response.text();
         console.error('Submission Error:', errorData);
@@ -79,11 +100,13 @@ export default function Contact() {
     } catch (err) {
       console.error('Fetch Error:', err);
       setStatus('Submission failed. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div id="contact" className="px-6 py-12">
+    <div id="contact" className="px-6 py-12 relative">
       <div className="text-center space-y-4 mb-12">
         <h2 className="text-5xl font-medium text-red-900 font-playfair-display">
           Are you ready to have some fun<br />and grow your business?
@@ -93,8 +116,8 @@ export default function Contact() {
         </p>
       </div>
 
-      <div className="max-w-2xl mx-auto">
-        <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="max-w-2xl mx-auto relative">
+        <form onSubmit={handleSubmit} ref={formRef} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <input
               type="text"
@@ -115,7 +138,7 @@ export default function Contact() {
               required
             />
           </div>
-          
+
           <input
             type="email"
             name="email"
@@ -149,6 +172,16 @@ export default function Contact() {
                 />
                 <span className="text-neutral-500">Mobile App</span>
               </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  name="landingPage"
+                  checked={formData.projectType.landingPage}
+                  onChange={handleChange}
+                  className="w-5 h-5 border-neutral-400 text-black focus:ring-black accent-black"
+                />
+                <span className="text-neutral-500">$400 Landing Page</span>
+              </label>
             </div>
           </div>
 
@@ -158,20 +191,30 @@ export default function Contact() {
               placeholder="Tell me about your idea..."
               value={formData.description}
               onChange={handleChange}
-              className="w-full px-4 py-3 min-h-[150px] text-base placeholder-neutral-400 bg-white focus:outline-none resize-none"
+              className="w-full px-4 py-3 min-h-[150px] text-base placeholder-neutral-400 bg-white focus:outline-none resize-none block"
               required
             />
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-red-900 text-white py-4 px-6 rounded-none text-lg font-medium hover:bg-opacity-90 transition-opacity"
-          >
-            Submit Application
-          </button>
+          <div className="relative">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={`w-full py-4 px-6 rounded-none text-lg font-medium transition-opacity
+                ${isSubmitting
+                  ? 'bg-neutral-400 cursor-not-allowed'
+                  : 'bg-red-900 hover:bg-opacity-90'
+                } text-white`}
+            >
+              {isSubmitting ? 'Submitting...' : 'Submit Application'}
+            </button>
+          </div>
 
           {status && (
-            <p className="text-center text-lg font-medium text-neutral-500">
+            <p
+              ref={statusRef}
+              className="text-center text-lg font-medium text-neutral-500"
+            >
               {status}
             </p>
           )}
