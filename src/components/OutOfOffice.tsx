@@ -31,7 +31,9 @@ export default function OutOfOffice() {
             <a href="services/#contact" className="text-red-900 underline italic hover:text-black">
             please click here.
             </a>
-            &nbsp;The income I receive through paid projects and partnerships helps make this free program possible, allowing me to continue giving back to founders who need it most.
+            <br/>
+            <br/>
+            The income I receive through paid projects and partnerships helps make this free program possible, allowing me to continue giving back to founders who need it most.
             <br/>
             <br/>
     Thank you for your understanding and for being part of this amazing community!
